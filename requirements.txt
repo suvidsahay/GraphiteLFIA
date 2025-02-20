@@ -1,0 +1,14 @@
+# Core dependencies
+torch
+transformers
+
+# Evaluation Metrics
+rouge-score
+
+# Utility Libraries
+numpy
+pandas
+tqdm
+datasets
+notebook
+
