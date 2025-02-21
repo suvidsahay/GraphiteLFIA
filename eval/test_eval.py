@@ -24,10 +24,14 @@ Choosing the Right Path \
 Before joining the military, it is important to research different branches (Army, Navy, Air Force, Marine Corps, Coast Guard, and Space Force) and their specific roles. Speaking with recruiters, current service members, or veterans can provide valuable insights into military life. \
 A military career can be a rewarding experience, offering unique opportunities for growth, service, and leadership. However, it requires commitment, adaptability, and resilience. By understanding the benefits and challenges, individuals can make informed decisions about whether a military path aligns with their personal and professional goals."
 
-reference = "The military provides diverse career paths, structured training, and global opportunities..."
-evaluator = CombinedEvaluator()
-results = evaluator.evaluate_all(instruction, response, reference)
+
 
 def main():
+    reference = "The military provides diverse career paths, structured training, and global opportunities..."
+    evaluator = CombinedEvaluator()
+    results = evaluator.evaluate_all(instruction, response, reference)
     for category, result in results.items():
         print(f"{category}: {result}")
+
+if __name__ == "__main__":
+    main()

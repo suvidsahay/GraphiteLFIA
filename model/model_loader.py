@@ -6,7 +6,7 @@ class ModelLoader:
     _tokenizer = None
 
     @classmethod
-    def get_model(cls, model_name="kaist-ai/Prometheus-7b-v1.0", device="cpu"):
+    def get_model(cls, model_name="kaist-ai/Prometheus-7b-v1.0", device="auto"):
         if cls._model is None:
             print("Loading model...")
             cls._model = LlamaForCausalLM.from_pretrained(model_name, device_map=device)
