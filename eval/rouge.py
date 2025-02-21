@@ -1,20 +1,28 @@
 from rouge_score import rouge_scorer
 
-def calculate_rouge(reference, candidate, rouge_types=['rouge1', 'rouge2', 'rougeL']):
-    """
-    Calculates ROUGE scores for a given reference and candidate summary.
+class RougeEvaluator:
+    def __init__(self, rouge_types=['rouge1', 'rouge2', 'rougeL']):
+        """
+        Initializes the RougeEvaluator with specified ROUGE types.
 
-    Args:
-    reference: The reference summary (string).
-    candidate: The candidate summary (string).
-    rouge_types: A list of ROUGE types to calculate (e.g., ['rouge1', 'rouge2', 'rougeL']).
+        Args:
+        rouge_types: A list of ROUGE types to calculate (default: ['rouge1', 'rouge2', 'rougeL']).
+        """
+        self.rouge_types = rouge_types
+        self.scorer = rouge_scorer.RougeScorer(self.rouge_types, use_stemmer=True)
 
-    Returns:
-    A dictionary containing the ROUGE scores for each type.
-    """
-    scorer = rouge_scorer.RougeScorer(rouge_types, use_stemmer=True)
-    scores = scorer.score(reference, candidate)
-    return scores
+    def calculate_rouge(self, reference, candidate):
+        """
+        Calculates ROUGE scores for a given reference and candidate summary.
+
+        Args:
+        reference: The reference summary (string).
+        candidate: The candidate summary (string).
+
+        Returns:
+        A dictionary containing the ROUGE scores for each type.
+        """
+        return self.scorer.score(reference, candidate)
 
 
 if __name__ == "__main__":
@@ -22,5 +30,7 @@ if __name__ == "__main__":
     generated = "The military offers diverse careers, including engineering and medicine."
     reference = "A military career provides opportunities in fields like medicine and engineering."
 
-    rouge_scores = calculate_rouge(generated, reference)
+    evaluator = RougeEvaluator()
+    rouge_scores = evaluator.calculate_rouge(reference, generated)
+
     print("ROUGE Scores:", rouge_scores)

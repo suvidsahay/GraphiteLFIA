@@ -1,4 +1,4 @@
-from baseevaluator import BaseEvaluator
+from .base_eval import BaseEvaluator
 
 class CoherenceEvaluator(BaseEvaluator):
     rubric = "[Coherence and Organization: Is the article well-organized and logically structured?] \

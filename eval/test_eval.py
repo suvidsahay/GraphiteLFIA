@@ -1,4 +1,4 @@
-from evalmetrics import CombinedEvaluator
+from .combined_eval import CombinedEvaluator
 
 instruction = "Generate an article about military careers."
 response = "Exploring Military Careers: Opportunities, Benefits, and Challenges.\
@@ -28,5 +28,6 @@ reference = "The military provides diverse career paths, structured training, an
 evaluator = CombinedEvaluator()
 results = evaluator.evaluate_all(instruction, response, reference)
 
-for category, result in results.items():
-    print(f"{category}: {result}")
+def main():
+    for category, result in results.items():
+        print(f"{category}: {result}")

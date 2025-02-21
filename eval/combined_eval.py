@@ -1,8 +1,8 @@
-from eval import InterestEvaluator
-from evalbc import CoverageEvaluator
-from evalco import CoherenceEvaluator
-from evalrf import RelevanceEvaluator
-#from .rouge import compute_rouge  
+from .interest_eval import InterestEvaluator
+from .coverage_eval import CoverageEvaluator
+from .coherence_eval import CoherenceEvaluator
+from .relevance_eval import RelevanceEvaluator
+from .rouge import RougeEvaluator
 
 class CombinedEvaluator:
     def __init__(self):
@@ -10,6 +10,7 @@ class CombinedEvaluator:
         self.coverage = CoverageEvaluator()
         self.coherence = CoherenceEvaluator()
         self.relevance = RelevanceEvaluator()
+        self.rouge = RougeEvaluator()
 
     def evaluate_all(self, instruction, response, reference):
         return {
@@ -17,5 +18,5 @@ class CombinedEvaluator:
             "Coverage": self.coverage.evaluate_coverage(instruction, response),
             "Coherence": self.coherence.evaluate_coherence(instruction, response),
             "Relevance": self.relevance.evaluate_relevance(instruction, response),
-            #"ROUGE": compute_rouge(response, reference)
+            "ROUGE": self.rouge.calculate_rouge(response, reference)
         }

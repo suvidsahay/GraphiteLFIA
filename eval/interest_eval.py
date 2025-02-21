@@ -1,4 +1,4 @@
-from baseevaluator import BaseEvaluator
+from .base_eval import BaseEvaluator
 
 class InterestEvaluator(BaseEvaluator):
     rubric = "[Interest Level: How engaging and thought-provoking is the article?] \

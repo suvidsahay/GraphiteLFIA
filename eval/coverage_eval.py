@@ -1,4 +1,4 @@
-from baseevaluator import BaseEvaluator
+from .base_eval import BaseEvaluator
 
 class CoverageEvaluator(BaseEvaluator):
     rubric = "[Broad Coverage: Does the article provide an in-depth exploration of the topic and have good coverage?] \

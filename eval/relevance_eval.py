@@ -1,4 +1,4 @@
-from baseevaluator import BaseEvaluator
+from .base_eval import BaseEvaluator
 
 class RelevanceEvaluator(BaseEvaluator):
     rubric = "[Relevance and Focus: Does the article stay on topic and maintain a clear focus?] \

@@ -1,10 +1,13 @@
 import torch
 from transformers import AutoTokenizer, LlamaForCausalLM
 import re
+from model import ModelLoader
+
+
 class BaseEvaluator:
-    def __init__(self, model_name="kaist-ai/Prometheus-7b-v1.0", tokenizer_name="meta-llama/Llama-2-7b-chat-hf", device="cpu"):
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
-        self.model = LlamaForCausalLM.from_pretrained(model_name, device_map=device)
+    def __init__(self, device="cuda"):
+        self.tokenizer = ModelLoader.get_tokenizer()
+        self.model = ModelLoader.get_model(device=device)
 
     def evaluate(self, rubric, instruction, response):
         input_text = f"###Task Description: An instruction, a response, and a rubric are given. Assess the response based on the rubric and return feedback and a score (1-5). Format: 'Feedback: (feedback) [RESULT] (score)'. ###Instruction: {instruction} ###Response: {response} ###Rubric: {rubric} ###Feedback:"
