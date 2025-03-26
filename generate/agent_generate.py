@@ -236,7 +236,7 @@ if __name__ == "__main__":
     parser.add_argument("--topic", type=str, help="Topic of the article")
     parser.add_argument("--length", type=int, default=500, help="Word limit")
     parser.add_argument("--instructions", type=str, default="", help="Instructions for article")
-    parser.add_argument("--output_file", type=str, default="solution_results.json", help="Output path for the file")
+    parser.add_argument("--output_file", type=str, default="agent_results.json", help="Output path for the file")
 
     args = parser.parse_args()
     
