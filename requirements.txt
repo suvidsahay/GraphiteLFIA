@@ -1,6 +1,6 @@
 # Core dependencies
-torch
-transformers
+torch~=2.5.0
+transformers~=4.41.2
 
 # Evaluation Metrics
 rouge-score
@@ -11,4 +11,8 @@ pandas
 tqdm
 datasets
 notebook
+accelerate~=1.4.0
+fschat[model_worker,webui]
 
+
+rouge_score~=0.1.2
