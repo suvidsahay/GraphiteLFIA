@@ -8,7 +8,7 @@ def read_file(filepath):
 
 
 def evaluate_model(evaluator, model_name, folder, filename, aggregated_results, valid_counts):
-    response = read_file(os.path.join("eval/test", folder, filename))
+    response = read_file(os.path.join("data/", folder, filename))
     reference = read_file(os.path.join("data/FreshWiki/txt", filename))
 
     topic = filename.rsplit(".", 1)[0].replace("_", " ")
@@ -63,13 +63,13 @@ def main():
     # Dictionary to track count of valid scores for each metric
     valid_counts = {key: 0 for key in aggregated_results}
 
-    files = [f for f in os.listdir("eval/test/storm_interface") if
-             os.path.isfile(os.path.join("eval/test/storm_interface", f))]
+    files = [f for f in os.listdir("data/storm_interface") if
+             os.path.isfile(os.path.join("data/storm_interface", f))]
 
 
     models = {
-        "STORM": "storm_interface",
-        # "Zero-shot GPT-4": "zero_shot_gpt_4",
+        # "STORM": "storm_interface",
+        "Zero-shot GPT-4": "zero_shot_gpt_4",
     }
 
     for filename in files:

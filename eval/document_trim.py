@@ -116,7 +116,7 @@ def assemble_article(node):
 # Example usage:
 if __name__ == '__main__':
     # Read your article from a file or string
-    with open('../eval/test/storm_interface/65th_Annual_Grammy_Awards.txt', 'r', encoding='utf-8') as f:
+    with open('../data/storm_interface/65th_Annual_Grammy_Awards.txt', 'r', encoding='utf-8') as f:
         article_text = f.read()
 
     root = parse_article(article_text)
