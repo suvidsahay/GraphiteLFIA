@@ -1,14 +1,11 @@
-import logging
-import torch
 import re
-from transformers import AutoTokenizer, LlamaForCausalLM
 from model import ModelLoader
 from fastchat.conversation import get_conv_template
 
 class BaseEvaluator:
-    def __init__(self, device="auto"):
-        self.tokenizer = ModelLoader.get_tokenizer()
-        self.model = ModelLoader.get_model(device=device)
+    def __init__(self, model_name="kaist-ai/Prometheus-7b-v1.0", tokenizer_name="meta-llama/Llama-2-7b-chat-hf", device="auto"):
+        self.tokenizer = ModelLoader.get_tokenizer(tokenizer_name)
+        self.model = ModelLoader.get_model(model_name, device=device)
 
     def evaluate(self, rubric, instruction, response):
         # Create a conversation template
@@ -36,7 +33,7 @@ class BaseEvaluator:
 
         # Generate model output
         outputs = self.model.generate(
-            input_ids, do_sample=True, temperature=1.0, top_p=0.9,
+            input_ids, do_sample=True, temperature=1, top_p=0.9,
             max_new_tokens=512, repetition_penalty=1.03
         )
         decoded_output = self.tokenizer.decode(outputs[0], skip_special_tokens=True)

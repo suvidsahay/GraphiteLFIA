@@ -8,5 +8,9 @@ class RelevanceEvaluator(BaseEvaluator):
                 Score 4: Mostly on topic and focused; the narrative has a consistent relevance to the core subject with infrequent digressions. \
                 Score 5: Exceptionally focused and entirely on topic; the article is tightly centered on the subject, with every piece of information contributing to a comprehensive understanding of the topic."
 
+    def __init__(self, model_name="kaist-ai/Prometheus-7b-v1.0", tokenizer_name="meta-llama/Llama-2-7b-chat-hf",
+                 device="auto"):
+        super().__init__(model_name=model_name, tokenizer_name=tokenizer_name, device=device)
+
     def evaluate_relevance(self, instruction, response):
         return self.evaluate(self.rubric, instruction, response)

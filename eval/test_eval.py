@@ -68,8 +68,8 @@ def main():
 
 
     models = {
-        # "STORM": "storm_interface",
-        "Zero-shot GPT-4": "zero_shot_gpt_4",
+        "STORM": "storm_interface",
+        # "Zero-shot GPT-4": "zero_shot_chat_gpt_4",
     }
 
     for filename in files:
