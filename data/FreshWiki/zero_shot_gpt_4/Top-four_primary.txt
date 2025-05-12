@@ -1,0 +1,137 @@
+# Top-Four Primary
+
+## Overview
+
+### Definition
+
+A top-four primary, also known as a quadruple-primary or four-way primary, is a type of electoral system where all candidates, regardless of their party affiliation, compete in the same primary. The top four vote-getters then advance to the general election. This system aims to ensure that voters have a wider array of choices during the general election.
+
+### History
+
+The concept of a top-four primary system has roots in the progressive era of American politics when reformers sought to give more power to the electorate and decrease the influence of political machines. This type of primary emerged as an alternative to traditional closed or open primary systems, where only the top candidate from each major political party advances to the general election. The top-four primary is a more recent development, designed to further increase voter choice and competition.
+
+## Types of Top-Four Primaries
+
+### Partisan Primaries
+
+#### Definition
+
+In a partisan top-four primary, candidates are required to list their party affiliation on the ballot. Voters then select from this pool of candidates, with the top four vote-getters, regardless of party, moving on to the general election.
+
+#### Advantages
+
+Partisan primaries have the advantage of providing voters with party-affiliated information about the candidates, which can assist them in making informed decisions. Additionally, they may increase competition within parties and motivate candidates to appeal to a broader segment of voters.
+
+#### Criticisms
+
+Critics of partisan primaries argue that they reinforce the power of political parties and can lead to polarized election outcomes. Furthermore, in some instances, a single party could potentially occupy all four slots on the general election ballot, thereby limiting voter choice.
+
+### Nonpartisan Primaries
+
+#### Definition
+
+In nonpartisan top-four primaries, candidates appear on the ballot without their party affiliation listed. Similar to partisan primaries, the four candidates with the most votes advance to the general election.
+
+#### Advantages
+
+Nonpartisan primaries can encourage more independent and third-party candidates to run, potentially leading to more diverse representation. They can also force candidates to appeal to a broader range of voters, rather than catering only to their party base.
+
+#### Criticisms
+
+Detractors contend that by not listing party affiliation, nonpartisan primaries can confuse voters and make it difficult for them to make informed decisions. Additionally, these types of primaries can result in less political accountability as candidates are not officially tied to any party platform.
+
+## Implementation
+
+### In the United States
+
+#### Federal Level
+
+While the top-four primary system is not used for federal elections in the United States, it has been the subject of discussion and legislative proposals, with advocates arguing it could help reduce partisan gridlock in Congress.
+
+#### State Level
+
+##### California
+
+California does not use a top-four primary system but instead uses a top-two primary system, adopted in 2010. The top-two system is similar to the top-four, with the only difference being the number of candidates who advance to the general election.
+
+##### Washington
+
+Like California, Washington State also uses a top-two primary system. It adopted this model in 2008 after a federal court upheld its constitutionality.
+
+##### Other States
+
+Several states, including Alaska and Oregon, have considered implementing a top-four primary system. In November 2020, Alaska became the first state to adopt a variation of the top-four primary, coupled with ranked-choice voting in the general election.
+
+### In Other Countries
+
+#### Examples
+
+Some other countries, such as France and Brazil, use a variation of the top-four primary in their electoral systems. They have two rounds of voting, and if no candidate achieves a majority in the first round, a second round is held with the top four candidates.
+
+#### Pros and Cons
+
+In countries that use this system, it has been credited with fostering a competitive political environment and providing voters with more options. However, critics argue that it can be complex, costly, and may inadvertently favor extreme candidates.
+
+## Impact on Elections
+
+### Voter Turnout
+
+Top-four primaries could potentially increase voter turnout by giving voters more choices and increasing competition among candidates. However, the actual impact on voter turnout is yet to be definitively determined.
+
+### Representation
+
+Top-four primaries could lead to better representation by allowing more candidates, including independents and those from minor parties, to make it to the general election.
+
+### Election Outcomes
+
+While top-four primaries could lead to more competitive elections and potentially less partisan outcomes, they could also result in single-party dominance on the general election ballot in heavily partisan districts.
+
+## Controversies and Criticisms
+
+### Potential for Manipulation
+
+Critics argue that top-four primaries could be manipulated, with parties running additional candidates to split the vote and ensure their preferred candidates make it to the general election.
+
+### Disproportionate Representation
+
+There's a possibility that top-four primaries could lead to disproportionate representation, with some groups overrepresented and others underrepresented in the general election.
+
+### Other Criticisms
+
+Other criticisms of top-four primaries include their complexity, the potential for voter confusion, and the possibility of fostering political polarization rather than reducing it.
+
+## Supporters and Opponents
+
+### Political Parties
+
+While some political parties support the concept of a top-four primary as a way to increase competition and voter choice, others oppose it, fearing it could weaken party influence.
+
+### Advocacy Groups
+
+Various advocacy groups have voiced support for top-four primaries, citing the potential to increase voter participation and representation. However, others have expressed concerns about their potential downsides.
+
+### Public Opinion
+
+Public opinion on top-four primaries is varied, with some viewing them as a way to increase electoral competition and others seeing them as potentially confusing or manipulative.
+
+## Future of Top-Four Primaries
+
+### Proposed Reforms
+
+Various reforms have been proposed to address the criticisms of top-four primaries, including implementing ranked-choice voting in the general election to ensure that the winning candidate has broad support.
+
+### Potential Impact
+
+The adoption of top-four primaries could have a significant impact on the political landscape, potentially increasing competition, representation, and voter choice. However, it could also lead to unforeseen consequences and challenges.
+
+### Predictions
+
+While it's hard to predict the future of top-four primaries, their adoption in Alaska and ongoing discussions in other states suggest they may continue to be a topic of interest in electoral reform debates.
+
+## References
+
+[References omitted in this sample article]
+
+## External Links
+
+[External links omitted in this sample article]

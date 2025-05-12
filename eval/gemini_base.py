@@ -52,7 +52,7 @@ An instruction (might include an Input inside it), two responses to evaluate (de
         match = re.search(r'\[([AB])\]', feedback)
         if match:
             return feedback, match.group(1)
-        raise ValueError(f"Could not extract result (A or B) from feedback: {feedback}.")
+        raise ValueError("Could not extract result (A or B) from feedback.")
 
     def evaluate_pair(self, instruction: str, response_a: str, response_b: str, criteria: str) -> Tuple[str, str]:
         prompt = self._create_prompt(instruction, response_a, response_b, criteria)
@@ -191,9 +191,8 @@ def analyze_preferences(results_df):
 
 def evaluate_rubric(evaluator, instructions, responses_A, responses_B, response_A_types, response_B_types, rubric, rubric_name):
     print(f"\nEvaluating articles based on rubric: {rubric}")
-    rows = []
 
-    # iterate in lockstep
+    rows = []
     for instr, a_text, b_text, a_type, b_type in tqdm(zip(
             instructions, responses_A, responses_B, response_A_types, response_B_types
     )):
@@ -217,6 +216,7 @@ def evaluate_rubric(evaluator, instructions, responses_A, responses_B, response_
 
     # build the DataFrame
     results_df = pd.DataFrame(rows)
+
     rubric_dir = f'results/{rubric_name}'
     os.makedirs(rubric_dir, exist_ok=True)
 
@@ -246,25 +246,20 @@ def evaluate_rubric(evaluator, instructions, responses_A, responses_B, response_
 def main():
     evaluator = GeminiEvaluator()
 
-    df = pd.read_csv('data/freshwiki.csv')
+    df = pd.read_csv('data/article_dataset.csv')
     print("Column names:", df.columns.tolist())
 
-    article_types = ['text', 'agent_1', 'storm', 'gpt4']
+    article_types = ['human', 'unengaging']
     article_pairs = list(combinations(article_types, 2))
 
     instructions, responses_A, responses_B, response_A_types, response_B_types = [], [], [], [], []
     instruction_template = "{topic}"
 
     for _, row in df.iterrows():
-        topic = row['article']
+        topic = row['topic']
         articles = {
-            'text': row['text'],
-            'agent_1': row['agent_1'],
-            'storm': row['storm'],
-            'gpt4': row['gpt4'],
-            # 'human_written': row['human-writen article'],
-            # 'generated': row['generated article'],
-            # 'unengaging': row['unengaging generated article'],
+            'human': row['human-writen article'],
+            'unengaging': row['unengaging generated article'],
         }
 
         for article_type_A, article_type_B in article_pairs:
@@ -275,34 +270,36 @@ def main():
             response_B_types.append(article_type_B)
 
     rubrics = {
-        # 'fun': "Which article is more fun?",
+        'fun': "Which article is more fun?",
         'conversational_tone': "Which article has a more conversational tone?",
         'personality': "Which article has more personality?",
         'calls_to_action': "Which article contains more calls to action?",
-        # 'asks_questions': "Which article asks more questions of the reader?",
-        # 'less_dry': "Which article is less dry?",
-        # 'better_opening_hook': "Which article has a better opening hook?",
-        # 'more_repetitive': "Which article is more repetitive?",
+        'asks_questions': "Which article asks more questions of the reader?",
+        'less_dry': "Which article is less dry?",
+        'better_opening_hook': "Which article has a better opening hook?",
+        'more_repetitive': "Which article is more repetitive?",
         'engaging_average_reader': "Which article is likely to be more engaging to the average reader of a website?",
         'practical_tips': "Which article contains more practical tips?",
-        # 'more_engaging': "Which article is more engaging?",
+        'more_engaging': "Which article is more engaging?",
         'less_boilerplate': "Which article sounds less like boilerplate?",
-        # 'more_surprising': "Which article is more surprising?",
+        'more_surprising': "Which article is more surprising?",
         'narrative_elements': "Which article has more narrative elements?",
-        # 'human_like': "Which article sounds more like it was written by a human?",
+        'human_like': "Which article sounds more like it was written by a human?",
         'more_examples': "Which article has more examples?",
         'varied_sentence_structures': "Which article has a wider variety of sentence structures?",
-        # 'more_encouraging': "Which article is more encouraging?",
-        # 'less_flowery': "Which article is less flowery?",
-        # 'better_rhythm': "Which article has better rhythm?",
-        # 'easier_to_understand': "Which article is easier to understand?",
-        # 'advanced_word_choice': "Which article uses more advanced words where a more straightforward synonym would be sufficient?",
-        # 'more_formulaic': "Which article sounds more formulaic?",
-        # 'better_sentence_flow': "Which article has sentences that flow better?",
-        # 'appealing_average_reader': "Which article is likely to be more appealing to the average reader of a website?",
-        # 'less_repetitive_structures': "Which article has less repetitive sentence structures?",
-        # 'consistent': "Which article is more consistent?",
+        'more_encouraging': "Which article is more encouraging?",
+        'less_flowery': "Which article is less flowery?",
+        'better_rhythm': "Which article has better rhythm?",
+        'easier_to_understand': "Which article is easier to understand?",
+        'advanced_word_choice': "Which article uses more advanced words where a more straightforward synonym would be sufficient?",
+        'more_formulaic': "Which article sounds more formulaic?",
+        'better_sentence_flow': "Which article has sentences that flow better?",
+        'appealing_average_reader': "Which article is likely to be more appealing to the average reader of a website?",
+        'less_repetitive_structures': "Which article has less repetitive sentence structures?",
+        'consistent': "Which article is more consistent?",
     }
+
+    print(rubrics['fun'])
 
     # Run each rubric, collect its preference matrix
     all_pref = {}
@@ -319,40 +316,32 @@ def main():
         )
         all_pref[rubric_name] = pref_matrix
 
-    # Plot them in a single figure, 4 rows × 7 cols
-    n_cols = 3
-    n_rows = 3
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(n_cols * 4, n_rows * 3))
-    axes = axes.flatten()
+    summary_rows = []
+    for rubric_name, matrix in all_pref.items():
+        human_wins = matrix.loc['human', 'unengaging']
+        unengaging_wins = matrix.loc['unengaging', 'human']
+        total = human_wins + unengaging_wins
 
-    for ax, (rubric_name, matrix) in zip(axes, all_pref.items()):
-        sns.heatmap(
-            matrix,
-            annot=True,
-            fmt="d",
-            cmap="YlOrRd",
-            cbar=False,
-            square=True,
-            ax=ax
-        )
-        ax.set_title(rubric_name.replace("_", " ").title(), fontsize=10)
-        ax.set_xlabel("")
-        ax.set_ylabel("")
+        if total > 0:
+            rate = human_wins / total * 100
+        else:
+            rate = None  # or 0.0, as you prefer
 
-    # Turn off any unused subplots (we have 28 slots, 27 rubrics)
-    for ax in axes[len(all_pref):]:
-        ax.axis("off")
+        summary_rows.append({
+            "rubric": rubric_name,
+            "rubric_prompt": rubrics[rubric_name],
+            "human_wins": human_wins,
+            "unengaging_wins": unengaging_wins,
+            "total_comparisons": total,
+            "text_win_rate_pct": rate
+        })
 
-    plt.tight_layout()
+    # 2) turn into a DataFrame and save
+    summary_df = pd.DataFrame(summary_rows)
     os.makedirs("results", exist_ok=True)
-    out_path = "results/all_rubric_preference_matrices.png"
-    plt.savefig(out_path)
-    plt.close()
-    print(f"All preference matrices saved to {out_path}")
-
-    # for rubric_name, rubric in rubrics.items():
-    #     evaluate_rubric(evaluator, instructions, responses_A, responses_B,
-    #                     response_A_types, response_B_types, rubric, rubric_name)
+    out_csv = "results/text_vs_gpt4_rates.csv"
+    summary_df.to_csv(out_csv, index=False)
+    print(f"\nSaved text vs GPT-4 rates to {out_csv}")
 
 
 if __name__ == "__main__":
