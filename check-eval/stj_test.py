@@ -13,41 +13,41 @@ from pathlib import Path
 main.load_dotenv()
 
 criteria_definitions = {
-    "linguistic_fluency": {
-        "natural_expression": "The candidate should read naturally and maintain a fluid rhythm, aligning its tone with the reference text.",
-        "text_length": "The length of the candidate should be appropriate and proportional to the content in the reference text.",
-        "vocabulary": "The vocabulary used in the candidate should be contextually suitable and comparable to that in the reference.",
-        "syntax": "The candidate should demonstrate proper sentence structure in a manner consistent with the reference.",
-        "mechanic_spelling_punctuation": "Spelling and punctuation in the candidate should be correct and on par with the reference quality."
-    },
-    "logical_fluency": {
-        "organization_layout": "The candidate should follow a coherent structure inspired by the organization of the reference.",
-        "repetitive_content": "The candidate should avoid unnecessary repetition compared to the reference.",
-        "inter_sentence_cohesion": "Sentences in the candidate should connect logically as they do in the reference.",
-        "inter_paragraph_cohesion": "The flow between paragraphs in the candidate should mirror the logical transitions in the reference."
-    },
-    "coherence": {
-        "topic_consistency": "The candidate should maintain a consistent theme that aligns with the reference content.",
-        "topic_sentence_paragraph": "Each paragraph in the candidate should reflect subtopics derived from the reference paragraphs."
-    },
-    "consistency": {
-        "tone": "The tone of the candidate should be consistent with the tone observed in the reference.",
-        "stance_posture": "The candidate should uphold a coherent stance that is either aligned with or reasonably derived from the reference.",
-        "style": "The candidate should adopt a stylistic approach that mirrors the style of the reference (e.g., formal/informal, spoken/written)."
-    },
-    "complexity": {
-        "vocabulary": "The vocabulary in the candidate should reflect an appropriate level of complexity compared to the reference.",
-        "syntax": "Sentence structure in the candidate should exhibit a level of complexity similar to the reference."
-    },
-    "specificity": {
-        "use_of_examples_and_review": "The candidate should incorporate specific examples or evidence when reflected in the reference.",
-        "detailed_descriptions": "Quantitative or detailed information present in the reference should be echoed in the candidate."
-    },
-    "interestingness": {
-        "engagement": "The candidate should maintain engagement levels comparable to the reference.",
-        "kindness": "The candidate should reflect a tone of consideration or sensitivity similar to the reference.",
-        "originality": "The candidate may include new perspectives, but they should be coherent with the ideas expressed in the reference."
-    },
+  "linguistic_fluency": {
+    "natural_expression": "The writing should sound natural and maintain a smooth, fluid rhythm with a consistent tone.",
+    "text_length": "The overall length should be appropriate and proportional to the depth and scope of the content.",
+    "vocabulary": "Word choices should be contextually appropriate and well-suited to the subject matter.",
+    "syntax": "Sentences should demonstrate proper grammar and structure, contributing to clarity and readability.",
+    "mechanic_spelling_punctuation": "Spelling and punctuation should be correct and follow standard writing conventions."
+  },
+  "logical_fluency": {
+    "organization_layout": "The structure of the writing should be coherent, with ideas presented in a logical and organized manner.",
+    "repetitive_content": "Content should avoid unnecessary repetition of words, phrases, or ideas.",
+    "inter_sentence_cohesion": "Sentences should connect logically and flow smoothly from one to the next.",
+    "inter_paragraph_cohesion": "Paragraphs should transition clearly, maintaining logical relationships between ideas."
+  },
+  "coherence": {
+    "topic_consistency": "The writing should maintain a consistent theme or subject throughout.",
+    "topic_sentence_paragraph": "Each paragraph should be focused on a clear subtopic or aspect of the main idea."
+  },
+  "consistency": {
+    "tone": "The tone should remain consistent throughout, whether formal, informal, neutral, or expressive.",
+    "stance_posture": "The point of view or position taken should remain steady and logically developed.",
+    "style": "The overall writing style should be coherent and not shift unexpectedly (e.g., from casual to technical)."
+  },
+  "complexity": {
+    "vocabulary": "Vocabulary should reflect a thoughtful level of complexity, without being overly simplistic or needlessly complex.",
+    "syntax": "Sentence structures should be varied and show an appropriate degree of sophistication."
+  },
+  "specificity": {
+    "use_of_examples_and_review": "Relevant examples, comparisons, or evidence should be included where helpful.",
+    "detailed_descriptions": "Specific facts, figures, or in-depth details should be used to enrich the content when appropriate."
+  },
+  "interestingness": {
+     "curiosity_arousal": "The content should spark curiosity or raise intriguing questions that encourage continued reading.",
+     "surprise_or_novelty": "The text should include unexpected facts, perspectives, or twists that defy reader expectations.",
+     "emotional_resonance": "The writing should evoke emotional reactions such as awe, joy, sadness, or empathy."
+  }
 }
 
 def flatten_criteria(criteria_dict):
@@ -82,9 +82,11 @@ class STJ:
         self.evaluate_checklist_prompt = open(Path(__file__).parent / "checkeval" / "prompts" / "evaluate_checklist.md").read()
 
     def load_data(self, split="TEST"):
-        return pd.read_csv("./data/sample_zero_shot.csv")
+        data = pd.read_csv("./data/human_generated_2.csv")
+        data['sentence_A'] = ""
+        return data
 
-    def generate(self, criterion="linguistic_fluency", method="reference"):
+    def generate(self, criterion="linguistic_fluency", method="criterion"):
         sub_criteria = [key for key in flat_criteria_definitions if key.startswith(criterion + ".")]
 
         pred_scores = {sub: [] for sub in sub_criteria}
@@ -137,25 +139,22 @@ class STJ:
 
                 with open(f"results/stj_zero_{criterion}_{method}.txt", "w") as output_file:
                     for row in all_results:
-                        output_file.write("Reference: " + row["sentence_A"] + "")
-                        output_file.write("Candidate: " + row["sentence_B"] + "")
+                        output_file.write("Reference: " + row.get("sentence_A", "") + "\n")
+                        output_file.write("Candidate: " + row.get("sentence_B", "") + "\n")
                         for sub, checklist in row["checklists"].items():
-                            output_file.write(f"Criterion: {sub}")
-                            output_file.write(checklist + "")
-                        output_file.write("Overall Evaluation:")
+                            output_file.write(f"Criterion: {sub}\n")
+                            output_file.write(checklist + "\n")
+                        output_file.write("Overall Evaluation:\n")
                         for crit, score in row["overall_eval"].items():
-                            output_file.write(f"  {crit}: {score}")
-                        output_file.write("" + "="*40 + "")
+                            output_file.write(f"  {crit}: {score}\n")
+                        output_file.write("\n" + "="*40 + "\n")
 
                 pbar.update(1)
             except Exception as e:
                 print(f"Error processing row {i}: {e}")
                 failed_ids.append(i)
-                print(f"Failed at row index {i} with error: {e}")
                 pbar.update(1)
                 continue
-                
-       
 
         print("\nFinal Evaluation:")
         flat_scores = [score for scores in pred_scores.values() for score in scores]
@@ -166,21 +165,22 @@ class STJ:
             "overall_average_score": round(np.mean(flat_scores) * 100, 2)
         }
 
-        with open(f"results/stj_zero_{criterion}_{method}_summary.json", "w") as f:
+        with open(f"results/human_{criterion}_{method}_summary.json", "w") as f:
             json.dump(summary, f, indent=2)
+
         if failed_ids:
             with open(f"results/stj_zero_{criterion}_{method}_failed_ids.txt", "w") as f:
                 f.write("Failed IDs:\n")
                 for failed_id in failed_ids:
                     f.write(f"{failed_id}\n")
 
-
-        print("\nSummary saved to:", f"results/stj_zero_{criterion}_{method}_summary.json")
+        print("\nSummary saved to:", f"results/human_{criterion}_{method}_summary.json")
 
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--method", type=str, choices=["reference", "candidate", "criterion"], default="reference")
+    parser.add_argument("--criterion", type=str, default="interestingness")
+    parser.add_argument("--method", type=str, choices=["reference", "candidate", "criterion"], default="criterion")
     parser.add_argument("--model", type=str, default="gpt-4o")
     args = parser.parse_args()
 
@@ -201,15 +201,17 @@ if __name__ == "__main__":
         stj = STJ(model=args.model)
         stj.generate(criterion, args.method)
 
-        summary_path = f"results/stj_zero_{criterion}_{args.method}_summary.json"
+        summary_path = f"results/human_{criterion}_{args.method}_summary.json"
         if os.path.exists(summary_path):
             with open(summary_path, "r") as f:
                 summary = json.load(f)
-                summary_scores[criterion] = summary["overall_average_score"]
+                summary_scores[criterion] = summary.get("overall_average_score", 0)
+        else:
+            print(f"Summary file not found: {summary_path}")
 
-    with open("results/overall_summary_zero.txt", "w") as summary_file:
-        summary_file.write("Final Summary of Overall Average Scores:")
+    with open("results/human_overall_summary.txt", "w") as summary_file:
+        summary_file.write("Final Summary of Overall Average Scores:\n")
         for criterion, avg_score in summary_scores.items():
-            summary_file.write(f"{criterion}: {avg_score}%")
+            summary_file.write(f"{criterion}: {avg_score}%\n")
 
-    print("Completed evaluations. Summary written to results/overall_summary_zero.txt")
+    print("Completed evaluations. Summary written to results/human_overall_summary.txt")
