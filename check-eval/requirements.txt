@@ -1,0 +1,9 @@
+instructor
+numpy
+openai
+pandas
+protobuf
+pydantic
+python-dotenv
+scipy
+tqdm
